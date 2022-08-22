@@ -32,6 +32,8 @@ Options:\n\
 -l <ln>          force use of <ln> language\n\
 -g <theme>       GTK theme name\n\
 -wm <wmname>     window manager name (if can not be detected)\n\
+-i <command>     command executed when gui is shown\n\
+-e <command>     command executed when gui is hidden\n\
 -oneshot         run in the foreground, exit when window is closed\n\
                  generally you should not use this option, use simply `nwggrid` instead\n\
 [requires layer-shell]:\n\

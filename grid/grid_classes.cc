@@ -14,7 +14,6 @@
  * (https://stackoverflow.com/questions/3908565/how-to-make-gtk-window-background-transparent)
  * Re-worked for Gtkmm 3.0 by Louis Melahn, L.C. January 31, 2014.
  * */
-
 #include <fstream>
 
 #include "charconv-compat.h"
@@ -67,6 +66,9 @@ GridConfig::GridConfig(const InputParser& parser, const Glib::RefPtr<Gdk::Screen
         icon_size = parse_icon_size(i_size);
     }
     oneshot = parser.cmdOptionExists("-oneshot");
+
+    command_show = parser.getCmdOption("-i");
+    command_hide = parser.getCmdOption("-e");
 }
 
 static Gtk::Widget* make_widget(const Glib::RefPtr<Glib::Object>& object) {
@@ -366,7 +368,17 @@ void GridWindow::on_show() {
     vadjustment->set_value(vadjustment->get_lower());
     focus_first_box();
     searchbox.set_text("");
+    if(!config.command_show.empty()) {
+        system(config.command_show.c_str());
+    }
     return PlatformWindow::on_show();
+}
+
+void GridWindow::on_hide() {
+    if(!config.command_hide.empty()) {
+        system(config.command_hide.c_str());
+    }
+    return PlatformWindow::on_hide();
 }
 
 bool GridWindow::on_delete_event(GdkEventAny* event) {

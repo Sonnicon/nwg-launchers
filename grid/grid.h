@@ -101,6 +101,8 @@ struct GridConfig: public Config {
     int icon_size{ 72 };
     RGBA background_color;
     bool oneshot{ false };    // run in foreground, exit when window is closed
+    std::string command_show;
+    std::string command_hide;
 };
 
 class AbstractBoxes {
@@ -334,6 +336,7 @@ class GridWindow : public PlatformWindow {
         //Override default signal handler:
         bool on_key_press_event(GdkEventKey*) override;
         void on_show() override;
+	void on_hide() override;
         bool on_delete_event(GdkEventAny*) override;
         bool on_button_press_event(GdkEventButton*) override;
     private:
